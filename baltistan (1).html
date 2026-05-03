@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baltistan — Ghanche District Tourism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#0d1117;--ink2:#2a2f3a;--mist:#f4f1eb;--snow:#fafaf8;
+    --gold:#b8912a;--gold2:#e6b84a;--teal:#1a6b5c;--teal2:#2d9b80;
+    --trans:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;background:var(--snow);color:var(--ink);overflow-x:hidden}
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 4rem;display:flex;align-items:center;justify-content:space-between;transition:var(--trans)}
+  nav.scrolled{background:rgba(13,17,23,0.95);backdrop-filter:blur(12px);padding:0.9rem 4rem;box-shadow:0 1px 0 rgba(255,255,255,0.08)}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;letter-spacing:0.12em;color:#fff;text-decoration:none;cursor:pointer}
+  .logo span{color:var(--gold2);font-style:italic}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:rgba(255,255,255,0.82);text-decoration:none;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:400;transition:var(--trans);cursor:pointer}
+  .nav-links a:hover,.nav-links a.active{color:var(--gold2)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+  .hamburger span{width:22px;height:1.5px;background:#fff;display:block}
+  .page{display:none;min-height:100vh}
+  .page.active{display:block}
+
+  /* HERO */
+  .home-hero{position:relative;height:100vh;overflow:hidden}
+  .hero-slides{position:absolute;inset:0}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;background-size:cover;background-position:center}
+  .slide.active{opacity:1}
+  .s1{background-image:linear-gradient(rgba(0,0,0,0.38),rgba(0,0,0,0.58)),url('https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=1600&q=80')}
+  .s2{background-image:linear-gradient(rgba(0,0,0,0.32),rgba(0,0,0,0.52)),url('https://images.unsplash.com/photo-1571310100246-e0676f359a51?w=1600&q=80')}
+  .s3{background-image:linear-gradient(rgba(0,0,0,0.38),rgba(0,0,0,0.55)),url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1600&q=80')}
+  .hero-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;z-index:2}
+  .hero-tag{font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold2);margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.4s forwards}
+  .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7.5rem);font-weight:300;color:#fff;line-height:1.02;opacity:0;animation:fadeUp 1s 0.65s forwards}
+  .hero-h1 em{font-style:italic;color:var(--gold2)}
+  .hero-sub{font-size:1.05rem;color:rgba(255,255,255,0.78);margin-top:1.4rem;max-width:520px;font-weight:300;opacity:0;animation:fadeUp 1s 0.9s forwards;line-height:1.7}
+  .hero-btns{display:flex;gap:1rem;margin-top:2.5rem;opacity:0;animation:fadeUp 1s 1.1s forwards}
+  .slide-dots{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+  .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:var(--trans)}
+  .dot.active{background:var(--gold2);width:22px;border-radius:3px}
+
+  /* COMMON */
+  section{padding:6rem 4rem}
+  .section-tag{font-size:0.72rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;display:block}
+  .section-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.4rem);font-weight:400;line-height:1.15;color:var(--ink)}
+  .section-h2 em{font-style:italic;color:var(--teal)}
+  .btn-primary{background:var(--gold);color:#fff;padding:0.85rem 2.2rem;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;border:none;cursor:pointer;transition:var(--trans);border-radius:2px;font-family:'DM Sans',sans-serif}
+  .btn-primary:hover{background:var(--gold2);transform:translateY(-2px)}
+  .btn-outline{background:transparent;color:#fff;padding:0.85rem 2.2rem;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.5);cursor:pointer;transition:var(--trans);border-radius:2px;font-family:'DM Sans',sans-serif}
+  .btn-outline:hover{border-color:#fff;background:rgba(255,255,255,0.08)}
+
+  /* STATS */
+  .stats-bar{background:var(--ink);display:grid;grid-template-columns:repeat(4,1fr);border-top:3px solid var(--gold)}
+  .stat-item{padding:2rem;border-right:1px solid rgba(255,255,255,0.08);text-align:center}
+  .stat-item:last-child{border-right:none}
+  .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:var(--gold2);display:block;font-weight:300}
+  .stat-label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:0.3rem;display:block}
+
+  /* INTRO GRID */
+  .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+  .intro-img{width:100%;height:520px;object-fit:cover;border-radius:4px}
+  .intro-badge{position:absolute;bottom:-2rem;right:-2rem;background:var(--gold);color:#fff;padding:2rem;text-align:center;width:160px}
+  .badge-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;display:block;line-height:1}
+  .badge-text{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.4rem;display:block;opacity:0.9}
+  .intro-text p{color:var(--ink2);line-height:1.85;margin-top:1.2rem;font-size:1rem;font-weight:300}
+  .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+  .feat{display:flex;align-items:flex-start;gap:0.7rem}
+  .feat-icon{width:36px;height:36px;background:var(--mist);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem}
+  .feat-title{font-weight:500;font-size:0.88rem}
+  .feat-sub{font-size:0.82rem;color:var(--ink2);font-weight:300}
+
+  /* DEST PREVIEW GRID */
+  .dest-grid-home{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:300px 300px;gap:1rem}
+  .dest-card{position:relative;overflow:hidden;border-radius:4px;cursor:pointer}
+  .dest-card:first-child{grid-row:1/3}
+  .dci{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease}
+  .dest-card:hover .dci{transform:scale(1.06)}
+  .dest-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,transparent 55%)}
+  .dest-info{position:absolute;bottom:1.4rem;left:1.4rem;right:1.4rem;color:#fff}
+  .dest-region{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold2);display:block;margin-bottom:0.3rem}
+  .dest-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;line-height:1.1}
+  .dest-card:first-child .dest-name{font-size:2.3rem}
+
+  /* FULL DEST CARDS */
+  .dest-page-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:2rem;margin-top:2rem}
+  .dfc{border-radius:6px;overflow:hidden;border:1px solid rgba(0,0,0,0.07);background:#fff;transition:var(--trans)}
+  .dfc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.1)}
+  .dfc-img{width:100%;height:230px;object-fit:cover}
+  .dfc-body{padding:1.5rem}
+  .dfc-tag{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;display:block}
+  .dfc-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;margin-bottom:0.6rem}
+  .dfc-text{font-size:0.86rem;color:var(--ink2);line-height:1.7;font-weight:300}
+  .dfc-meta{font-size:0.76rem;color:var(--ink2);margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(0,0,0,0.07)}
+
+  /* GALLERY */
+  .filter-row{display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:2rem}
+  .filter-btn{padding:0.4rem 1.2rem;border:1px solid rgba(0,0,0,0.15);border-radius:20px;font-size:0.8rem;background:transparent;cursor:pointer;transition:var(--trans);font-family:'DM Sans',sans-serif}
+  .filter-btn.active,.filter-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .gallery-masonry{columns:3;column-gap:1rem}
+  .gitem{break-inside:avoid;margin-bottom:1rem;position:relative;overflow:hidden;border-radius:4px;cursor:pointer}
+  .gitem img{width:100%;display:block;transition:transform 0.5s ease}
+  .gitem:hover img{transform:scale(1.05)}
+  .gitem-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);transition:var(--trans);display:flex;align-items:flex-end;padding:0.8rem}
+  .gitem:hover .gitem-overlay{background:rgba(0,0,0,0.35)}
+  .gcap{color:#fff;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;opacity:0;transition:var(--trans)}
+  .gitem:hover .gcap{opacity:1}
+
+  /* PAGE HERO */
+  .page-hero{height:48vh;min-height:360px;position:relative;display:flex;align-items:flex-end;padding:4rem}
+  .ph-bg{position:absolute;inset:0;background-size:cover;background-position:center}
+  .ph-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 40%,rgba(0,0,0,0.2))}
+  .ph-content{position:relative;z-index:1;color:#fff}
+
+  /* FEEDBACK */
+  .fb-wrap{max-width:680px;margin:0 auto}
+  .form-card{background:#fff;padding:2.5rem;border-radius:6px;border:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 24px rgba(0,0,0,0.05)}
+  .form-card h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:0.4rem}
+  .form-card p{font-size:0.86rem;color:var(--ink2);font-weight:300;margin-bottom:1.5rem}
+  .fr{margin-bottom:1.2rem}
+  .fr label{display:block;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:0.4rem;font-weight:500}
+  .fr input,.fr select,.fr textarea{width:100%;padding:0.75rem 1rem;border:1px solid rgba(0,0,0,0.14);border-radius:3px;font-size:0.9rem;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--snow);outline:none;transition:var(--trans)}
+  .fr input:focus,.fr select:focus,.fr textarea:focus{border-color:var(--teal);background:#fff}
+  .fr textarea{min-height:120px;resize:vertical}
+  .fr2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .submit-btn{width:100%;background:var(--teal);color:#fff;border:none;padding:1rem;font-size:0.82rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:var(--trans);border-radius:3px;font-family:'DM Sans',sans-serif;margin-top:0.5rem}
+  .submit-btn:hover{background:var(--teal2)}
+  .email-note{text-align:center;margin-top:1rem;font-size:0.82rem;color:var(--ink2);font-weight:300}
+  .email-note a{color:var(--teal);text-decoration:none}
+
+  /* DEVELOPER */
+  .dev-section{background:var(--ink);padding:5rem 4rem}
+  .dev-card{max-width:500px;margin:2rem auto 0;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:3rem 2.5rem;text-align:center}
+  .dev-avatar{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);display:block;margin:0 auto 1.5rem;box-shadow:0 0 0 8px rgba(184,145,42,0.12)}
+  .dev-initials{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--teal) 0%,var(--gold) 100%);display:none;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:3rem;color:#fff;font-weight:300;border:3px solid var(--gold);margin:0 auto 1.5rem;box-shadow:0 0 0 8px rgba(184,145,42,0.12)}
+  .dev-badge{display:inline-block;background:var(--gold);color:#fff;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 1rem;border-radius:20px;margin-bottom:1.1rem}
+  .dev-name{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:400;color:#fff;margin-bottom:0.4rem}
+  .dev-loc{font-size:0.88rem;color:rgba(255,255,255,0.5);font-weight:300;margin-bottom:0.2rem}
+  .dev-loc strong{color:var(--gold2)}
+  .dev-divider{width:40px;height:1px;background:var(--gold);margin:1.3rem auto}
+  .dev-email-link{display:inline-flex;align-items:center;gap:0.5rem;color:var(--gold2);text-decoration:none;font-size:0.92rem;font-weight:300;transition:var(--trans)}
+  .dev-email-link:hover{color:#fff}
+  .dev-bio{font-size:0.84rem;color:rgba(255,255,255,0.42);margin-top:1.4rem;line-height:1.75;font-weight:300}
+
+  /* ABOUT */
+  .culture-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+  .cc{text-align:center;padding:2rem 1.5rem;border:1px solid rgba(0,0,0,0.07);border-radius:6px;background:#fff;transition:var(--trans)}
+  .cc:hover{box-shadow:0 10px 30px rgba(0,0,0,0.08);transform:translateY(-3px)}
+  .cc-icon{font-size:2rem;margin-bottom:1rem;display:block}
+  .cc-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:0.6rem}
+  .cc-text{font-size:0.85rem;color:var(--ink2);line-height:1.7;font-weight:300}
+
+  /* FOOTER */
+  footer{background:#08090d;color:rgba(255,255,255,0.65);padding:4rem 4rem 2rem}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:3rem}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;letter-spacing:0.1em;color:#fff;margin-bottom:1rem}
+  .footer-logo span{color:var(--gold2);font-style:italic}
+  .footer-tagline{font-size:0.84rem;line-height:1.7;font-weight:300;max-width:250px}
+  .footer-col h5{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1.2rem;font-weight:500}
+  .footer-links{list-style:none}
+  .footer-links li{margin-bottom:0.6rem}
+  .footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.84rem;font-weight:300;transition:var(--trans);cursor:pointer}
+  .footer-links a:hover{color:var(--gold2)}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:2rem;display:flex;align-items:center;justify-content:space-between}
+  .footer-bottom p{font-size:0.78rem;font-weight:300}
+  .footer-dev{font-size:0.78rem;color:var(--gold);cursor:pointer;transition:var(--trans)}
+  .footer-dev:hover{color:var(--gold2)}
+
+  /* LIGHTBOX */
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:2000;display:none;align-items:center;justify-content:center}
+  .lightbox.open{display:flex}
+  .lb-img{max-width:90vw;max-height:88vh;object-fit:contain;border-radius:3px}
+  .lb-close{position:absolute;top:2rem;right:2rem;color:#fff;font-size:1.5rem;cursor:pointer;opacity:0.7;background:none;border:none;transition:var(--trans)}
+  .lb-close:hover{opacity:1}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:2rem;right:2rem;background:var(--teal);color:#fff;padding:1rem 1.5rem;border-radius:4px;font-size:0.88rem;z-index:3000;transform:translateY(100px);opacity:0;transition:var(--trans);max-width:320px}
+  .toast.show{transform:translateY(0);opacity:1}
+
+  /* MOBILE */
+  .mobile-nav{position:fixed;top:0;right:-280px;width:280px;height:100vh;background:var(--ink);z-index:2001;transition:var(--trans);padding:5rem 2rem 2rem;display:flex;flex-direction:column;gap:1.2rem}
+  .mobile-nav.open{right:0}
+  .mobile-nav a{color:rgba(255,255,255,0.8);font-size:0.95rem;letter-spacing:0.08em;display:block;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.07);cursor:pointer;transition:var(--trans)}
+  .mobile-nav a:hover{color:var(--gold2)}
+  .overlay-bg{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;display:none}
+  .overlay-bg.open{display:block}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  @media(max-width:900px){
+    nav{padding:1rem 1.5rem}nav.scrolled{padding:0.8rem 1.5rem}
+    .nav-links{display:none}.hamburger{display:flex}
+    section{padding:4rem 1.5rem}
+    .stats-bar{grid-template-columns:repeat(2,1fr)}
+    .intro-grid{grid-template-columns:1fr;gap:3rem}
+    .dest-grid-home{grid-template-columns:1fr;grid-template-rows:auto}
+    .dest-card:first-child{grid-row:auto;height:280px}.dest-card{height:200px}
+    .culture-grid{grid-template-columns:1fr 1fr}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:2rem}
+    .gallery-masonry{columns:2}
+    .dev-section{padding:4rem 1.5rem}
+    footer{padding:3rem 1.5rem 1.5rem}
+  }
+  @media(max-width:600px){
+    .gallery-masonry{columns:1}.culture-grid{grid-template-columns:1fr}
+    .dest-page-grid{grid-template-columns:1fr}.fr2{grid-template-columns:1fr}
+    .hero-btns{flex-direction:column;align-items:center}
+    .footer-bottom{flex-direction:column;gap:1rem;text-align:center}
+    .footer-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <span class="logo" onclick="showPage('home')">Balt<span>istan</span></span>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" class="active" data-page="home">Home</a></li>
+    <li><a onclick="showPage('destinations')" data-page="destinations">Destinations</a></li>
+    <li><a onclick="showPage('gallery')" data-page="gallery">Gallery</a></li>
+    <li><a onclick="showPage('feedback')" data-page="feedback">Feedback</a></li>
+    <li><a onclick="showPage('about')" data-page="about">About</a></li>
+    <li><a onclick="showPage('developer')" data-page="developer">Developer</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="overlay-bg" id="obg" onclick="toggleNav()"></div>
+<div class="mobile-nav" id="mnav">
+  <a onclick="showPage('home');toggleNav()">Home</a>
+  <a onclick="showPage('destinations');toggleNav()">Destinations</a>
+  <a onclick="showPage('gallery');toggleNav()">Gallery</a>
+  <a onclick="showPage('feedback');toggleNav()">Feedback</a>
+  <a onclick="showPage('about');toggleNav()">About</a>
+  <a onclick="showPage('developer');toggleNav()">Developer</a>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img class="lb-img" id="lbimg" src="" alt="">
+</div>
+<div class="toast" id="toast"></div>
+
+
+<!-- ═══ HOME ═══ -->
+<div id="page-home" class="page active">
+  <div class="home-hero">
+    <div class="hero-slides">
+      <div class="slide s1 active"></div>
+      <div class="slide s2"></div>
+      <div class="slide s3"></div>
+    </div>
+    <div class="hero-content">
+      <span class="hero-tag">Ghanche District · Gilgit Baltistan, Pakistan</span>
+      <h1 class="hero-h1">Discover<br><em>Ghanche</em></h1>
+      <p class="hero-sub">A hidden paradise of emerald valleys, ancient glaciers, and centuries-old Balti heritage — waiting to be explored.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('destinations')">Explore Places</button>
+        <button class="btn-outline" onclick="showPage('gallery')">View Gallery</button>
+      </div>
+    </div>
+    <div class="slide-dots" id="sdots"></div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><span class="stat-num">Khplu</span><span class="stat-label">Historic Capital of Ghanche</span></div>
+    <div class="stat-item"><span class="stat-num">76 km</span><span class="stat-label">Siachen — Longest Non-Polar Glacier</span></div>
+    <div class="stat-item"><span class="stat-num">7,821m</span><span class="stat-label">Masherbrum Peak — Hushe Valley</span></div>
+    <div class="stat-item"><span class="stat-num">Balghar</span><span class="stat-label">Scenic Alpine Valley of Ghanche</span></div>
+  </div>
+
+  <section>
+    <div class="intro-grid">
+      <div style="position:relative" class="reveal">
+        <img class="intro-img" src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=800&q=80" alt="Ghanche Valley">
+        <div class="intro-badge"><span class="badge-num">GB</span><span class="badge-text">Ghanche, Gilgit Baltistan</span></div>
+      </div>
+      <div class="intro-text reveal">
+        <span class="section-tag">About Ghanche District</span>
+        <h2 class="section-h2">The Land of <em>Glaciers &amp; Heritage</em></h2>
+        <p>Ghanche is one of the most breathtaking districts of Gilgit Baltistan, stretching along the Shyok River and bordered by the majestic Karakoram Range. Its dramatic landscape holds deep valleys, towering peaks, ancient forts, and the legendary Siachen Glacier.</p>
+        <p>The district is home to the warm-hearted Balti people whose culture, cuisine, and history have shaped this remote mountain corner for centuries. From the historic Khplu Fort to the serene Balghar Valley, every turn reveals something extraordinary.</p>
+        <div class="feat-grid">
+          <div class="feat"><div class="feat-icon">🏔</div><div><div class="feat-title">Siachen Glacier</div><div class="feat-sub">World's longest non-polar glacier</div></div></div>
+          <div class="feat"><div class="feat-icon">🏯</div><div><div class="feat-title">Khplu Fort</div><div class="feat-sub">Restored 19th-century palace</div></div></div>
+          <div class="feat"><div class="feat-icon">🌿</div><div><div class="feat-title">Balghar Valley</div><div class="feat-sub">Scenic alpine village life</div></div></div>
+          <div class="feat"><div class="feat-icon">🌊</div><div><div class="feat-title">Shyok River</div><div class="feat-sub">Ancient Balti trade corridor</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--mist)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem">
+      <div><span class="section-tag">Top Places — Ghanche</span><h2 class="section-h2">Iconic <em>Valleys &amp; Sites</em></h2></div>
+      <button class="btn-outline" style="color:var(--ink);border-color:rgba(0,0,0,0.2)" onclick="showPage('destinations')">View All →</button>
+    </div>
+    <div class="dest-grid-home reveal">
+      <div class="dest-card" onclick="showPage('destinations')">
+        <img class="dci" src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=900&q=80" alt="Khplu Valley">
+        <div class="dest-overlay"></div>
+        <div class="dest-info"><span class="dest-region">Ghanche District HQ</span><div class="dest-name">Khplu Valley</div></div>
+      </div>
+      <div class="dest-card" onclick="showPage('destinations')">
+        <img class="dci" src="https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&q=80" alt="Balghar Valley">
+        <div class="dest-overlay"></div>
+        <div class="dest-info"><span class="dest-region">Ghanche District</span><div class="dest-name">Balghar Valley</div></div>
+      </div>
+      <div class="dest-card" onclick="showPage('destinations')">
+        <img class="dci" src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&q=80" alt="Siachen Glacier">
+        <div class="dest-overlay"></div>
+        <div class="dest-info"><span class="dest-region">Ghanche District</span><div class="dest-name">Siachen Glacier</div></div>
+      </div>
+      <div class="dest-card" onclick="showPage('destinations')">
+        <img class="dci" src="https://images.unsplash.com/photo-1571310100246-e0676f359a51?w=600&q=80" alt="Hushe Valley">
+        <div class="dest-overlay"></div>
+        <div class="dest-info"><span class="dest-region">Ghanche District</span><div class="dest-name">Hushe Valley</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--ink);padding:5rem 4rem;text-align:center">
+    <span class="section-tag" style="color:var(--gold2);display:inline-block">Traveller Stories</span>
+    <blockquote style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.1rem);color:#fff;font-weight:300;font-style:italic;max-width:740px;margin:1.5rem auto;line-height:1.55">"Ghanche is not just a place — it is a feeling. The silence of Balghar Valley, the golden light on Khplu Fort at dusk, the kindness of the Balti people. I left a piece of my heart there."</blockquote>
+    <p style="color:rgba(255,255,255,0.4);font-size:0.84rem;letter-spacing:0.1em">— A Traveller from Islamabad</p>
+    <div style="color:var(--gold2);font-size:1rem;margin-top:0.8rem">★★★★★</div>
+  </section>
+</div>
+
+
+<!-- ═══ DESTINATIONS ═══ -->
+<div id="page-destinations" class="page">
+  <div class="page-hero">
+    <div class="ph-bg" style="background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.65)),url('https://images.unsplash.com/photo-1571310100246-e0676f359a51?w=1600&q=80')"></div>
+    <div class="ph-overlay"></div>
+    <div class="ph-content">
+      <span class="section-tag" style="color:var(--gold2)">Ghanche District</span>
+      <h2 class="section-h2" style="color:#fff;font-size:clamp(2.5rem,5vw,4rem)">Places to <em style="color:var(--gold2)">Explore</em></h2>
+    </div>
+  </div>
+  <section>
+    <p style="color:var(--ink2);font-size:0.92rem;font-weight:300;max-width:600px;line-height:1.7;margin-bottom:0.5rem">Discover the valleys, glaciers, forts, and natural wonders of <strong style="font-weight:500">Ghanche District</strong> — one of Pakistan's most extraordinary mountain regions.</p>
+    <div class="dest-page-grid" id="dest-grid"></div>
+  </section>
+</div>
+
+
+<!-- ═══ GALLERY ═══ -->
+<div id="page-gallery" class="page">
+  <div class="page-hero">
+    <div class="ph-bg" style="background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.65)),url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1600&q=80')"></div>
+    <div class="ph-overlay"></div>
+    <div class="ph-content">
+      <span class="section-tag" style="color:var(--gold2)">Photography</span>
+      <h2 class="section-h2" style="color:#fff;font-size:clamp(2.5rem,5vw,4rem)">Visual <em style="color:var(--gold2)">Journey</em></h2>
+    </div>
+  </div>
+  <section>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterG('all',this)">All</button>
+      <button class="filter-btn" onclick="filterG('mountains',this)">Mountains</button>
+      <button class="filter-btn" onclick="filterG('valleys',this)">Valleys</button>
+      <button class="filter-btn" onclick="filterG('culture',this)">Culture</button>
+      <button class="filter-btn" onclick="filterG('glaciers',this)">Glaciers</button>
+    </div>
+    <div class="gallery-masonry" id="gallery-grid"></div>
+  </section>
+</div>
+
+
+<!-- ═══ FEEDBACK ═══ -->
+<div id="page-feedback" class="page">
+  <div class="page-hero">
+    <div class="ph-bg" style="background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.65)),url('https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=1600&q=80')"></div>
+    <div class="ph-overlay"></div>
+    <div class="ph-content">
+      <span class="section-tag" style="color:var(--gold2)">Get In Touch</span>
+      <h2 class="section-h2" style="color:#fff;font-size:clamp(2.5rem,5vw,4rem)">Share Your <em style="color:var(--gold2)">Feedback</em></h2>
+    </div>
+  </div>
+  <section>
+    <div class="fb-wrap">
+      <div style="text-align:center;margin-bottom:2.5rem">
+        <span class="section-tag" style="display:inline-block">Contact</span>
+        <h2 class="section-h2">We'd Love to <em>Hear From You</em></h2>
+        <p style="margin-top:1rem;color:var(--ink2);font-size:0.92rem;font-weight:300;line-height:1.7">Your message will be sent directly to <a href="mailto:ibtisaamsaleem@gmail.com" style="color:var(--teal);font-weight:500">ibtisaamsaleem@gmail.com</a></p>
+      </div>
+      <div class="form-card">
+        <h3>Send a Message</h3>
+        <p>Your feedback helps make Ghanche tourism better for everyone.</p>
+        <div class="fr2">
+          <div class="fr"><label>Your Name</label><input type="text" placeholder="Full name" id="fb-name"></div>
+          <div class="fr"><label>Email Address</label><input type="email" placeholder="your@email.com" id="fb-email"></div>
+        </div>
+        <div class="fr">
+          <label>Subject</label>
+          <select id="fb-sub">
+            <option>General Feedback</option>
+            <option>Travel Experience in Ghanche</option>
+            <option>Question about a Place</option>
+            <option>Collaboration / Media</option>
+            <option>Report an Issue</option>
+          </select>
+        </div>
+        <div class="fr">
+          <label>Your Rating</label>
+          <select id="fb-rat">
+            <option>⭐⭐⭐⭐⭐ — Excellent</option>
+            <option>⭐⭐⭐⭐ — Very Good</option>
+            <option>⭐⭐⭐ — Good</option>
+            <option>⭐⭐ — Fair</option>
+            <option>⭐ — Needs Improvement</option>
+          </select>
+        </div>
+        <div class="fr"><label>Message</label><textarea placeholder="Share your experience, thoughts, or questions about Ghanche District..." id="fb-msg"></textarea></div>
+        <button class="submit-btn" onclick="sendFeedback()">Send Feedback →</button>
+        <p class="email-note">Or write directly: <a href="mailto:ibtisaamsaleem@gmail.com">ibtisaamsaleem@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- ═══ ABOUT ═══ -->
+<div id="page-about" class="page">
+  <div class="page-hero">
+    <div class="ph-bg" style="background-image:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.65)),url('https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=1600&q=80')"></div>
+    <div class="ph-overlay"></div>
+    <div class="ph-content">
+      <span class="section-tag" style="color:var(--gold2)">Ghanche District</span>
+      <h2 class="section-h2" style="color:#fff;font-size:clamp(2.5rem,5vw,4rem)">About <em style="color:var(--gold2)">Ghanche</em></h2>
+    </div>
+  </div>
+  <section>
+    <div class="intro-grid">
+      <div class="intro-text">
+        <span class="section-tag">Geography</span>
+        <h2 class="section-h2">A District of <em>Extraordinary Beauty</em></h2>
+        <p>Ghanche District lies in the northeastern corner of Gilgit Baltistan, bordering China (Xinjiang) to the north and the Line of Control to the east. The Shyok River flows through its heart, carving one of Asia's most dramatic river valleys.</p>
+        <p>Home to the Siachen Glacier — 76 km long, the world's longest non-polar glacier — as well as Masherbrum (7,821m), K6, and K7, Ghanche is a frontier of extreme natural beauty and adventure.</p>
+      </div>
+      <div style="position:relative" class="reveal">
+        <img class="intro-img" src="https://images.unsplash.com/photo-1571310100246-e0676f359a51?w=800&q=80" alt="Ghanche">
+      </div>
+    </div>
+  </section>
+  <section style="background:var(--mist)">
+    <div style="text-align:center;margin-bottom:0.5rem">
+      <span class="section-tag" style="display:inline-block">Living Heritage</span>
+      <h2 class="section-h2">Culture of <em>Ghanche</em></h2>
+    </div>
+    <div class="culture-grid">
+      <div class="cc reveal"><span class="cc-icon">🎭</span><div class="cc-title">Balti Culture</div><p class="cc-text">The Balti people carry one of the oldest living cultures of the Karakoram — their music, poetry, and festivals echo centuries of mountain life.</p></div>
+      <div class="cc reveal" style="transition-delay:0.12s"><span class="cc-icon">🍽</span><div class="cc-title">Local Cuisine</div><p class="cc-text">Traditional Balti dishes — thukpa, tsampa, butter tea, and dried apricots — reflect the ingenuity of a people who thrived at high altitude.</p></div>
+      <div class="cc reveal" style="transition-delay:0.24s"><span class="cc-icon">🏯</span><div class="cc-title">Khplu Fort</div><p class="cc-text">The magnificent Khplu Palace (Yabgo Khar), restored by the Aga Khan Trust, is a jewel of 19th-century Tibetan-influenced Balti architecture.</p></div>
+      <div class="cc reveal"><span class="cc-icon">🗣</span><div class="cc-title">Balti Language</div><p class="cc-text">Balti — a Tibetan-derived language — is spoken throughout Ghanche with a rich oral tradition of poetry and storytelling.</p></div>
+      <div class="cc reveal" style="transition-delay:0.12s"><span class="cc-icon">🌾</span><div class="cc-title">Agriculture</div><p class="cc-text">Wheat, barley, apricots, and walnuts are cultivated on terraced fields, sustaining villages like Balghar, Hushe, and Dansam.</p></div>
+      <div class="cc reveal" style="transition-delay:0.24s"><span class="cc-icon">🤝</span><div class="cc-title">Hospitality</div><p class="cc-text">Ghanche's people are famed for extraordinary warmth. A traveller is always a guest — welcomed with butter tea and stories beside the hearth.</p></div>
+    </div>
+  </section>
+</div>
+
+
+<!-- ═══ DEVELOPER ═══ -->
+<div id="page-developer" class="page">
+  <div class="page-hero">
+    <div class="ph-bg" style="background-image:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.78)),url('https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=1600&q=80')"></div>
+    <div class="ph-overlay"></div>
+    <div class="ph-content">
+      <span class="section-tag" style="color:var(--gold2)">Baltistan Website</span>
+      <h2 class="section-h2" style="color:#fff;font-size:clamp(2.5rem,5vw,4rem)">Meet the <em style="color:var(--gold2)">Developer</em></h2>
+    </div>
+  </div>
+
+  <div class="dev-section">
+    <div style="text-align:center">
+      <span class="section-tag" style="color:var(--gold2);display:inline-block">Built With Pride</span>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:300;color:#fff;margin-top:0.5rem">From the Heart of <em style="color:var(--gold2);font-style:italic">Ghanche</em></h2>
+    </div>
+    <div class="dev-card">
+      <!-- Circle avatar using UI Avatars online service — shows initials IS with teal/gold colors -->
+      <img
+        class="dev-avatar"
+        src="https://ui-avatars.com/api/?name=Ibtisaam+Saleem&size=240&background=1a6b5c&color=e6b84a&font-size=0.36&bold=true&rounded=true&format=png"
+        alt="Ibtisaam Saleem"
+        onerror="this.style.display='none';document.getElementById('devInit').style.display='flex'"
+      >
+      <div class="dev-initials" id="devInit">IS</div>
+      <div class="dev-badge">Website Developer</div>
+      <div class="dev-name">Ibtisaam Saleem</div>
+      <div class="dev-loc">Balghar Valley · Ghanche</div>
+      <div class="dev-loc"><strong>Gilgit Baltistan, Pakistan</strong></div>
+      <div class="dev-divider"></div>
+      <a class="dev-email-link" href="mailto:ibtisaamsaleem@gmail.com">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        ibtisaamsaleem@gmail.com
+      </a>
+      <p class="dev-bio">This website was designed and developed to showcase the natural beauty, rich culture, and hidden gems of Ghanche District — a place I call home. Built to inspire travellers from around the world to discover this extraordinary corner of Gilgit Baltistan.</p>
+    </div>
+  </div>
+
+  <section style="background:var(--mist)">
+    <div style="text-align:center;max-width:580px;margin:0 auto">
+      <span class="section-tag" style="display:inline-block">Direct Contact</span>
+      <h2 class="section-h2">Questions? <em>Write to Me</em></h2>
+      <p style="margin-top:1rem;color:var(--ink2);font-size:0.92rem;font-weight:300;line-height:1.7">For any queries about Ghanche District, this website, or feedback — feel free to reach out directly. All feedback and messages go to:</p>
+      <a href="mailto:ibtisaamsaleem@gmail.com" style="display:inline-block;margin-top:1.8rem;background:var(--teal);color:#fff;padding:1rem 2.5rem;border-radius:3px;text-decoration:none;font-size:0.82rem;letter-spacing:0.12em;text-transform:uppercase">
+        ibtisaamsaleem@gmail.com →
+      </a>
+      <div style="margin-top:1.2rem">
+        <button class="btn-primary" onclick="showPage('feedback')">Open Feedback Form</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Balt<span>istan</span></div>
+      <p class="footer-tagline">Showcasing the hidden beauty of Ghanche District — its valleys, glaciers, forts, and the warmth of its Balti people.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul class="footer-links">
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('destinations')">Destinations</a></li>
+        <li><a onclick="showPage('gallery')">Gallery</a></li>
+        <li><a onclick="showPage('feedback')">Feedback</a></li>
+        <li><a onclick="showPage('about')">About</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Places — Ghanche</h5>
+      <ul class="footer-links">
+        <li><a>Khplu Valley</a></li>
+        <li><a>Balghar Valley</a></li>
+        <li><a>Hushe Valley</a></li>
+        <li><a>Siachen Glacier</a></li>
+        <li><a>Saltoro Valley</a></li>
+        <li><a>Dansam</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul class="footer-links">
+        <li><a>Balghar Valley, Ghanche</a></li>
+        <li><a>Gilgit Baltistan, Pakistan</a></li>
+        <li><a href="mailto:ibtisaamsaleem@gmail.com" style="color:var(--gold2)">ibtisaamsaleem@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Baltistan · Ghanche District Tourism. All rights reserved.</p>
+    <span class="footer-dev" onclick="showPage('developer')">Developed by Ibtisaam Saleem · Balghar, Ghanche</span>
+  </div>
+</footer>
+
+
+<script>
+// ── DATA: GHANCHE DISTRICT ONLY ──
+const destinations = [
+  {name:'Khplu Valley',region:'Ghanche District HQ',img:'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=700&q=80',desc:'The capital of Ghanche District, Khplu sits at 2,600m on the Shyok River. Its crown jewel is the 19th-century Khplu Palace (Yabgo Khar) — a masterpiece of Tibetan-influenced Balti architecture, lovingly restored by the Aga Khan Trust for Culture. Surrounded by apricot and walnut orchards, Khplu is the gateway to upper Ghanche.',tag:'Altitude 2,600m'},
+  {name:'Balghar Valley',region:'Ghanche District',img:'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=700&q=80',desc:'Balghar Valley is a scenic alpine community nestled among dramatic peaks in the heart of Ghanche. Known for its terraced fields, clear mountain streams, and traditional Balti village life, Balghar offers travellers a genuine glimpse into mountain culture unchanged for centuries. It is also the home valley of this website\'s developer.',tag:'Scenic Alpine Valley'},
+  {name:'Hushe Valley',region:'Ghanche District',img:'https://images.unsplash.com/photo-1571310100246-e0676f359a51?w=700&q=80',desc:'Hushe Valley is the base camp hub for some of the world\'s most spectacular mountaineering peaks — Masherbrum (7,821m), K6, and K7. The valley ends at a dramatic glacier snout and is home to skilled high-altitude porters and guides of the Hushe community.',tag:'Altitude 3,100m'},
+  {name:'Siachen Glacier',region:'Ghanche · Saltoro Range',img:'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=700&q=80',desc:'The Siachen Glacier, stretching over 76 kilometres, is the world\'s longest non-polar glacier and lies within the Ghanche District boundaries. Its icy expanse surrounded by peaks above 7,000m is an awe-inspiring testament to the raw power of nature in the high Karakoram.',tag:'Length 76 km'},
+  {name:'Saltoro Valley',region:'Ghanche District',img:'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=700&q=80',desc:'The remote Saltoro Valley leads toward the Saltoro Range and the approaches to Siachen. This starkly beautiful corridor of rock, ice, and silence is one of the most dramatic landscapes in all of Gilgit Baltistan — accessible only to the adventurous.',tag:'Remote High-Altitude'},
+  {name:'Dansam',region:'Lower Ghanche',img:'https://images.unsplash.com/photo-1571310100246-e0676f359a51?w=700&q=80',desc:'Dansam is a scenic village along the Shyok River in lower Ghanche, known for its fertile fields and river access. It serves as an important stop on the route toward Khplu and offers stunning views of the Karakoram peaks framing the horizon.',tag:'Shyok River Valley'},
+];
+
+const gallery = [
+  {cat:'mountains',src:'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&q=80',cap:'Peaks of Ghanche'},
+  {cat:'valleys',src:'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=600&q=80',cap:'Balghar Valley'},
+  {cat:'culture',src:'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&q=80',cap:'Khplu Fort'},
+  {cat:'mountains',src:'https://images.unsplash.com/photo-1571310100246-e0676f359a51?w=600&q=80',cap:'Hushe Peaks'},
+  {cat:'glaciers',src:'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=600&q=80',cap:'Siachen Glacier'},
+  {cat:'valleys',src:'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&q=80',cap:'Saltoro Valley'},
+  {cat:'culture',src:'https://images.unsplash.com/photo-1571310100246-e0676f359a51?w=600&q=80',cap:'Balti Village Life'},
+  {cat:'glaciers',src:'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&q=80',cap:'Glacier Snout, Hushe'},
+  {cat:'mountains',src:'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=600&q=80',cap:'Karakoram Peaks'},
+];
+
+// PAGE ROUTING
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.page===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(name==='destinations') renderDest();
+  if(name==='gallery') renderGallery('all');
+  setTimeout(initReveal,120);
+}
+
+// NAV SCROLL
+window.addEventListener('scroll',()=>document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>60));
+
+// SLIDESHOW
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('sdots');
+let cur=0;
+slides.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>go(i);
+  dotsEl.appendChild(d);
+});
+function go(n){
+  slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');
+  cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');
+}
+setInterval(()=>go((cur+1)%slides.length),5000);
+
+// RENDER DESTINATIONS
+function renderDest(){
+  document.getElementById('dest-grid').innerHTML=destinations.map(d=>`
+    <div class="dfc">
+      <img class="dfc-img" src="${d.img}" alt="${d.name}" loading="lazy">
+      <div class="dfc-body">
+        <span class="dfc-tag">${d.region}</span>
+        <div class="dfc-title">${d.name}</div>
+        <p class="dfc-text">${d.desc}</p>
+        <div class="dfc-meta">🏔 ${d.tag}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// GALLERY
+function renderGallery(cat){
+  const list=cat==='all'?gallery:gallery.filter(p=>p.cat===cat);
+  document.getElementById('gallery-grid').innerHTML=list.map(p=>`
+    <div class="gitem" onclick="openLb('${p.src.replace('600','1200')}')">
+      <img src="${p.src}" alt="${p.cap}" loading="lazy">
+      <div class="gitem-overlay"><span class="gcap">${p.cap}</span></div>
+    </div>
+  `).join('');
+}
+function filterG(cat,btn){
+  document.querySelectorAll('#page-gallery .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderGallery(cat);
+}
+function openLb(src){document.getElementById('lbimg').src=src;document.getElementById('lightbox').classList.add('open')}
+function closeLb(){document.getElementById('lightbox').classList.remove('open')}
+
+// FEEDBACK — sends via mailto to developer's email
+function sendFeedback(){
+  const name=document.getElementById('fb-name').value.trim();
+  const email=document.getElementById('fb-email').value.trim();
+  const msg=document.getElementById('fb-msg').value.trim();
+  if(!name||!email||!msg){showToast('Please fill in name, email and message.');return;}
+  const sub=document.getElementById('fb-sub').value;
+  const rat=document.getElementById('fb-rat').value;
+  const body=`Name: ${name}\nEmail: ${email}\nRating: ${rat}\n\nMessage:\n${msg}`;
+  window.location.href=`mailto:ibtisaamsaleem@gmail.com?subject=Baltistan Feedback: ${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+  showToast('✓ Opening your email app to send the feedback!');
+}
+
+function showToast(m){
+  const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3800);
+}
+
+// MOBILE NAV
+function toggleNav(){
+  document.getElementById('mnav').classList.toggle('open');
+  document.getElementById('obg').classList.toggle('open');
+}
+
+// SCROLL REVEAL
+function initReveal(){
+  const obs=new IntersectionObserver(e=>{
+    e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}});
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
+}
+initReveal();
+</script>
+</body>
+</html>
